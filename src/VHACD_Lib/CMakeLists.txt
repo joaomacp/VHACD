@@ -3,10 +3,6 @@ include(${CMAKE_COMMON_INC})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-if (NOT NO_OPENCL)
-	#include(FindOpenCL OPTIONAL)
-	find_package(OpenCL)
-endif()
 if (NOT NO_OPENMP)
 	#include(FindOpenMP OPTIONAL)
 	find_package(OpenMP)
@@ -20,27 +16,19 @@ set(LIB_TYPE "STATIC" CACHE STRING "STATIC, SHARED or MODULE?")
 message("[VHACD] \t LIB_TYPE " ${LIB_TYPE})
 add_library(vhacd ${LIB_TYPE} ${PROJECT_CPP_FILES} ${PROJECT_C_FILES} ${PROJECT_INC_FILES} ${PROJECT_INL_FILES} ${PROJECT_CL_FILES})
 
-if (OpenCL_FOUND)
-    target_include_directories(vhacd PRIVATE "${OpenCL_INCLUDE_DIR}")
-    target_link_libraries(vhacd PRIVATE "${OpenCL_LIBRARY}")
-    target_compile_definitions(vhacd PRIVATE -DOPENCL_FOUND=1 )
-    target_compile_definitions(vhacd PRIVATE -DOPENCL_CL_FILES="${PROJECT_CL_FILES}" )
-endif()
-
-
 target_include_directories(vhacd PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/inc/>
   $<INSTALL_INTERFACE:include/>  # <prefix>/include/mylib
   )
 
-
 message("[VHACD] \t -> CMAKE_INSTALL_PREFIX " ${CMAKE_INSTALL_PREFIX})
+set_target_properties(vhacd PROPERTIES LINKER_LANGUAGE CXX)
 install(TARGETS vhacd EXPORT vhacd-targets DESTINATION lib)
 install(FILES ${PROJECT_INC_FILES} DESTINATION include)
 install(FILES ${PROJECT_INL_FILES} DESTINATION include)
 
 
-set(VHACD_LIB_VERSION 3.2.0)
+set(VHACD_LIB_VERSION 4.1.0)
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
   "${CMAKE_CURRENT_BINARY_DIR}/vhacd/vhacd-config-version.cmake"

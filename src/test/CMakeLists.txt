@@ -1,9 +1,6 @@
 project(VHACD_TEST)
 include(${CMAKE_COMMON_INC})
 
-if (NOT NO_OPENCL)
-	find_package(OpenCL QUIET)
-endif()
 if (NOT NO_OPENMP)
 	find_package(OpenMP QUIET)
 endif()
@@ -18,12 +15,6 @@ add_executable(testVHACD ${PROJECT_CPP_FILES} ${PROJECT_C_FILES} ${PROJECT_INC_F
 
 target_include_directories(testVHACD PRIVATE ${CMAKE_SOURCE_DIR}/VHACD_Lib/public ${CMAKE_CURRENT_SOURCE_DIR}/inc)
 target_link_libraries(testVHACD vhacd)
-
-if (OpenCL_FOUND)
-    include_directories("${OpenCL_INCLUDE_DIRS}")
-    add_definitions( -DOPENCL_FOUND=1 )
-    target_link_libraries(testVHACD ${OpenCL_LIBRARIES})
-endif()
 
 if (NOT WIN32 AND NOT APPLE)
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall")
