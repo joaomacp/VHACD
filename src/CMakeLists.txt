@@ -27,7 +27,7 @@ foreach(CompilerFlag ${CompilerFlags})
     message("MSVC flags: ${CompilerFlag}:${${CompilerFlag}}")
 endforeach()
 
-include_directories(${CMAKE_SOURCE_DIR}/VHACD_Lib)
+include_directories(${CMAKE_SOURCE_DIR}/inc)
 
 add_library(libvhacd SHARED ${CMAKE_SOURCE_DIR}/dll/dll.cpp)
 

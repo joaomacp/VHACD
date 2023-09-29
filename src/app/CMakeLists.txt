@@ -13,7 +13,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(TestVHACD TestVHACD.cpp FloatMath.cpp InParser.cpp wavefront.cpp SaveUSDA.cpp)
 
-target_include_directories(TestVHACD PUBLIC "../VHACD_Lib")
+target_include_directories(TestVHACD PUBLIC "../inc")
 # On Linux we need to add pthread to the link
 if (WIN32)
 else (WIN32)
