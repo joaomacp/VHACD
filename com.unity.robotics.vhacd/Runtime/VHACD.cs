@@ -18,6 +18,7 @@ namespace MeshProcess
         }
 
         [Serializable]
+        [StructLayout(LayoutKind.Sequential)]
         public unsafe struct Parameters
         {
             public void Init()
@@ -25,10 +26,10 @@ namespace MeshProcess
                 m_callback = null;
                 m_logger = null;
                 m_taskRunner = null;
-                m_maxConvexHulls = 32; // Performance sensitive: adding more MeshColliders slows down Unity at runtime.
-                m_resolution = 100000; // Higher value increases generation time.
-                m_minimumVolumePercentErrorAllowed = 1; // Lower value increases generation time.
-                m_maxRecursionDepth = 10; // Higher value increases generation time.
+                m_maxConvexHulls = 32;
+                m_resolution = 100000;
+                m_minimumVolumePercentErrorAllowed = 1;
+                m_maxRecursionDepth = 10;
                 m_shrinkWrap = true;
                 m_fillMode = FillMode.FLOOD_FILL;
                 m_maxNumVerticesPerCH = 64;
@@ -41,7 +42,7 @@ namespace MeshProcess
             public void* m_logger;
             public void* m_taskRunner;
 
-            [Tooltip("The maximum number of convex hulls to produce. Performance sensitive.")]
+            [Tooltip("The maximum number of convex hulls to produce. Performance sensitive: adding more MeshColliders slows down Unity at runtime.")]
             [Range(1, 2048)]
             public uint m_maxConvexHulls;
 
@@ -80,6 +81,7 @@ namespace MeshProcess
             public bool m_findBestPlane;
         }
 
+        [StructLayout(LayoutKind.Sequential)]
         unsafe struct ConvexHull
         {
             public double* m_points;
