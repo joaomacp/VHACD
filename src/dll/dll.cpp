@@ -84,3 +84,10 @@ EXTERN void GetConvexHull(
         convexHullCSharp->m_triangles[i * 3 + 2] = ch.m_triangles[i].mI2;
     }
 }
+
+EXTERN void FreeConvexHull(
+    void* convexHull)
+{
+    delete [] ((ConvexHullCSharp*) convexHull)->m_points;
+    delete [] ((ConvexHullCSharp*) convexHull)->m_triangles;
+}

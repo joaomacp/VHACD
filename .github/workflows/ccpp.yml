@@ -32,7 +32,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake -G "${{ matrix.cmake_type }}" ../src
+        cmake -G "${{ matrix.cmake_type }}" -DCMAKE_BUILD_TYPE=Release ../src
     - name: build
       run: cmake --build build --config Release
 
